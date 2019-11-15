@@ -1,0 +1,21 @@
+.Sidebar{
+    
+    width: 300px;
+    margin: 51px 0 0 0;
+    background-color: rgb(211,211,211);
+}
+.icons{
+    margin: 5px;
+    background-color: aqua;
+    /* padding:55px 48px -1px 10px; */
+    padding:  10px 10px 20px 15px;
+  width:200px;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 16px;
+    /* padding: 15px 65px 18px 29px;; */
+}
+table {
+    width: 100%;
+  }
+  

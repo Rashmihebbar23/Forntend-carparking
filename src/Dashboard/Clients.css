@@ -1,0 +1,50 @@
+ 
+ 
+.card5{
+    border-radius: 5px;
+   
+     background-color: gainsboro;
+     /* width:100%; */
+margin:-341px 246px 72px 365px;
+
+
+} 
+
+.card-body{
+ width:100%;
+margin: 45px 246px 40px 5px;
+
+}
+.block{
+  margin:7px -11px 9px -70px;
+  padding: 4px 62px 0px 58px;
+  border-radius: 2px;
+}
+/* .blockdes{
+margin: 1px 132px 11px -23px;
+ padding: 1px 64px 1px 45px;
+ width: 55%;
+
+ border-radius: 2px;
+} */
+/* .block1{
+ margin: -1px -89px 12px -358px;
+ padding: 3px 60px 0px -4px;
+ border-radius: 2px;
+} */
+
+
+label{
+ display: block;
+ width: 140px;
+ text-align:right;
+ float: left;
+ margin:0 10px 10px -10px;
+  font-style: oblique;
+  color: #B4886B;
+} 
+.buttons{
+ margin: 24px 34px 27px 124px;
+ margin:15px;
+ float:left;
+}
