@@ -53,6 +53,15 @@ class Clients extends Component {
       console.log("post data", post);
     });
   };
+//   updateall = () => {
+//     Axios.put("http://localhost:8080/api/updateclient", { ...this.state })
+//       .then((put) => {
+//         console.log('get data', put.data);
+//         this.setState({
+//           data: get.data
+//         })
+//       })
+//   }
 
     render() {
          return (

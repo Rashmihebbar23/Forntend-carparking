@@ -16,7 +16,8 @@ import Col from 'react-bootstrap/Col';
 import './Booking.css';
 import Axios from 'axios';
 import Table from 'react-bootstrap/Table';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Addbooking from './Addbooking';
 
 
 // import Row from 'react-bootstrap/Row';
@@ -26,14 +27,16 @@ class Booking extends Component {
     super();
   }
   state = {
+    booking_id: '',
     valuefrom: '',
     valueto: '',
     space: '',
     name: '',
     Status: '',
     data: [],
-    BookingData:[],
-    filter:''
+    BookingData: [],
+    filter: '',
+    edit: []
   };
   componentDidMount() {
     this.getall();
@@ -45,41 +48,58 @@ class Booking extends Component {
         console.log('get data', get.data);
         this.setState({
           bookingData: get.data,
-          filter:'none'
+          filter: 'none'
         })
       })
   }
-  activeHandler = (res) => {
-      switch(res){
-        case 'active': {
-          this.setState({
-            filter:'yes',
-            data:this.state.bookingData.filter((res) => res.status === 'active' )
-          })
-          break;
-        }
-       
-        case 'inactive': {
-          this.setState({
-            filter:'yes',
-            data:this.state.bookingData.filter((res) => res.status === 'inactive' )
-          })
-          break;
-        }
-        case 'all': {
-          this.setState({
-            filter:'yes',
-            data:this.state.bookingData
-          })
-        }
-      }
+
+  onUpdateHandler = () => {
+    Axios.put("http://localhost:8080/api/updatebook", {...this.state})
+    .then((put)=>{
+      this.setState({
+        edit:put,
+        filter:'editform'
+      })
+    })
   }
-  
+  onDeleteHandler = (id) => {
+    Axios.delete("http://localhost:8080/api/deleteBook/" + id)
+      .then((del) => {
+        console.log('delete', del);
+      })
+  }
+
+  activeHandler = (res) => {
+    switch (res) {
+      case 'active': {
+        this.setState({
+          filter: 'yes',
+          data: this.state.bookingData.filter((res) => res.status === 'active')
+        })
+        break;
+      }
+
+      case 'inactive': {
+        this.setState({
+          filter: 'yes',
+          data: this.state.bookingData.filter((res) => res.status === 'inactive')
+        })
+        break;
+      }
+      case 'all': {
+        this.setState({
+          filter: 'yes',
+          data: this.state.bookingData
+        })
+      }
+    }
+  }
+
 
 
   render() {
     let tableBody = null;
-    if(this.state.filter === 'none'){
+    if (this.state.filter === 'none') {
       tableBody = (
         this.state.bookingData.map((row, index) => (
           <TableRow key={index}>
@@ -94,14 +114,15 @@ class Booking extends Component {
             <TableCell >{row.status}</TableCell>
             <TableCell>{row.actions}
               <button className="fa fa-edit ic" onClick={row}></button>
-              <button className="fa fa-trash ic" onClick={row}></button>
+              {/* <button className="fa fa-edit ic" onClick={() => this.onUpdateHandler(row)}><Link to={{ 'pathname': '/Addbooking' }}>edit</Link></button> */}
+              <button className="fa fa-trash ic" onClick={() => this.onDeleteHandler(row.booking_id)}></button>
             </TableCell>
 
           </TableRow>
         ))
       )
     }
-    else if(this.state.filter === 'yes'){
+    else if (this.state.filter === 'yes') {
       tableBody = (
         this.state.data.map((row, index) => (
           <TableRow key={index}>
@@ -115,15 +136,18 @@ class Booking extends Component {
             <TableCell>{row.client.name}</TableCell>
             <TableCell >{row.status}</TableCell>
             <TableCell>{row.actions}
-              <button className="fa fa-edit ic" onClick={row}></button>
-              <button className="fa fa-trash ic" onClick={row}></button>
+
             </TableCell>
 
           </TableRow>
         ))
       )
     }
-
+    else if (this.state.filter === 'editform') {
+      return (
+        <Addbooking editdata={this.state.edit}></Addbooking>
+      )
+    }
 
     return (
       <React.Fragment>
@@ -144,12 +168,12 @@ class Booking extends Component {
                   </ul>
                 </nav>
                 <div class="alert alert-info alert-dismissible">
-                  <button type="button" class="close" style={{position: "absolute",top:"-4px",right:"-13px"}} data-dismiss="alert">&times;</button><strong>Booking!</strong> Below you can find a list with all bookings made. You can sort, filter, delete and edit them..
+                  <button type="button" class="close" style={{ position: "absolute", top: "-4px", right: "-13px" }} data-dismiss="alert">&times;</button><strong>Booking!</strong> Below you can find a list with all bookings made. You can sort, filter, delete and edit them..
   </div>
-  <button type="button" onClick={() => this.activeHandler('active')}>active</button>
-  <button type="button" onClick={() => this.activeHandler('inactive')}>inactive</button>
-  <button type="button" onClick={() => this.activeHandler('all')}>all</button>
-                <button className="fa fa-plus-circle" style={{ margin: "10px", float: "left" }} onClick={this.row}><Link to={{'pathname':'/Addbooking'}}>Add Booking</Link></button>
+                <button type="button" onClick={() => this.activeHandler('active')}>active</button>
+                <button type="button" onClick={() => this.activeHandler('inactive')}>inactive</button>
+                <button type="button" onClick={() => this.activeHandler('all')}>all</button>
+                <button className="fa fa-plus-circle" style={{ margin: "10px", float: "left" }} onClick={this.row}><Link to={{ 'pathname': '/Addbooking' }}>Add Booking</Link></button>
                 <input type="text" className="fa fa-search" style={{ margin: "10px", float: "left" }} onClick={this.row}></input>
                 <div className="root">
                   {/* <CardContent> */}

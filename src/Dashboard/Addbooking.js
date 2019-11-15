@@ -17,8 +17,10 @@ class Addbooking extends Component {
         rentaldays:{value:""},
         space: { value: "" },
         paymentMethod: { value: "" },
+        // status:this.props.editdata.status,
         status: { value: "" },
         totalPrice: { value: "" }
+
     }
   };
 
@@ -45,8 +47,10 @@ class Addbooking extends Component {
         rentaldays: this.state.formControls.rentaldays.value,
         space: this.state.formControls.space.value,
         paymentMethod: this.state.formControls.paymentMethod.value,
-        status: this.state.formControls.status.value,
-        totalPrice:this.state.formControls.totalPrice.value
+        // status: this.state.formControls.status.value,
+        totalPrice:this.state.formControls.totalPrice.value,
+        // here am calling props
+        status:this.props.state.formControls.editdata.status,
     };
 
     axios.post("http://localhost:8080/api/addBook", tempObj).then(post => {
