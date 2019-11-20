@@ -125,11 +125,12 @@ class Booking extends Component {
   <div className="Product">
     <Sidebar></Sidebar>
          </div>
-         <div className="cardss">
+         <div className="cards1">
              <div className="card9">
            <div className="root">
            <CardContent>
             <button className="fa fa-plus-circle" style={{margin:"10px",float:"left"}} onClick={() => this. onAddpropertyHandler('form')}>Addbooking</button>
+            <button className="btn btn-sm" type="button" onClick={()=> this.activeHandler('All')}>ALL</button>
             {/* <div className="input-icons"/> 
             <i className="fa fa-search icon" style={{float:"right"}}></i> 
             <input type="text"  placeholder="Search" /> 

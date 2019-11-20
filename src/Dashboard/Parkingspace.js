@@ -94,7 +94,7 @@ return(
   <div className="Product">
     <Sidebar></Sidebar>
          </div>
-         <div className="cardss">
+         <div className="cards1">
              <div className="card9">
            <div className="root">
            <CardContent>
