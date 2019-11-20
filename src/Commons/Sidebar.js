@@ -39,8 +39,8 @@ function Sidebar() {
     <button  className="fa fa-tachometer icons"><strong style={{margin:"10px"}}></strong><Link to={{'pathname':'/dashboard'}}>Dashboard</Link></button><br/>
     <button  className="fa fa-book icons"><strong style={{margin:"10px"}}></strong><Link to={{'pathname':'/Booking'}}>Booking</Link></button><br/>
     <button  className="fa fa-pinterest-square icons"><strong style={{margin:"10px"}}></strong><Link to={{'pathname':'/Parkingspace'}}>Parking</Link></button><br/>
-    <button  className="fa fa-file icons"><strong style={{margin:"10px"}}></strong>Reports</button><br/>
-    <button  className="fa fa-sign-out icons"><strong style={{margin:"10px"}}></strong>LogOut</button><br/>
+    <button  className="fa fa-file icons"><strong style={{margin:"10px"}}></strong><Link to={{'pathname':'/Reports'}}>Reports</Link></button><br/>
+    <button  className="fa fa-sign-out icons"><strong style={{margin:"10px"}}></strong><Link to={{'pathname':'/Login'}}>LogOut</Link></button><br/>
 
 
 

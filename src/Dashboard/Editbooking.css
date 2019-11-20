@@ -1,6 +1,6 @@
  
  
-.card4{
+.card6{
     border-radius: 5px;
    
      background-color: gainsboro;
@@ -10,10 +10,10 @@ margin:-341px 246px 72px 365px;
 
 } 
 
-.card-bodyss{
+.card-body{
  width:100%;
 margin: 45px 246px 40px 5px;
-background-color: gainsboro;
+
 }
 .block{
   margin:7px -11px 9px -70px;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Search from './Search';
 
 // import Table from '@material-ui/core/Table';
 // import TableBody from '@material-ui/core/TableBody';
@@ -17,7 +18,8 @@ import './Booking.css';
 import Axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
-import Addbooking from './Addbooking';
+import Editbooking from './Editbooking';
+import { statement } from '@babel/template';
 
 
 // import Row from 'react-bootstrap/Row';
@@ -36,7 +38,10 @@ class Booking extends Component {
     data: [],
     BookingData: [],
     filter: '',
-    edit: []
+    filterproduct: [],
+    getvalue: '',
+    editdata: []
+
   };
   componentDidMount() {
     this.getall();
@@ -52,16 +57,17 @@ class Booking extends Component {
         })
       })
   }
-
-  onUpdateHandler = () => {
-    Axios.put("http://localhost:8080/api/updatebook", {...this.state})
-    .then((put)=>{
-      this.setState({
-        edit:put,
-        filter:'editform'
-      })
+  onUpdateHandler = (put) => {
+    // Axios.put("http://localhost:8080/api/updatebook", {...this.state})
+    // .then((put)=>{
+    this.setState({
+      // array of data
+      edit: put,
+      filter: 'editform'
     })
+    // })
   }
+
   onDeleteHandler = (id) => {
     Axios.delete("http://localhost:8080/api/deleteBook/" + id)
       .then((del) => {
@@ -95,7 +101,27 @@ class Booking extends Component {
     }
   }
 
+  HandleInput = (e) => {
 
+    this.setState({ getvalue: e.target.value })
+    console.log("get the input datataatatat", this.state.getvalue);
+if(this.state.getvalue!==null)
+{
+    const updatedList = this.state.bookingData.filter(item => {
+
+      console.log("entered dtatassssss", item.status)
+
+      if (item['status'] !== undefined) {
+        return (
+          item['status'].toLowerCase().includes(this.state.getvalue.toLowerCase())
+        );
+      }
+
+    });
+    this.setState({ bookingData: updatedList });
+
+  }
+  }
 
   render() {
     let tableBody = null;
@@ -113,8 +139,8 @@ class Booking extends Component {
             <TableCell>{row.client.name}</TableCell>
             <TableCell >{row.status}</TableCell>
             <TableCell>{row.actions}
-              <button className="fa fa-edit ic" onClick={row}></button>
-              {/* <button className="fa fa-edit ic" onClick={() => this.onUpdateHandler(row)}><Link to={{ 'pathname': '/Addbooking' }}>edit</Link></button> */}
+
+              <button className="fa fa-edit ic" onClick={() => this.onUpdateHandler(row)}></button>
               <button className="fa fa-trash ic" onClick={() => this.onDeleteHandler(row.booking_id)}></button>
             </TableCell>
 
@@ -143,14 +169,16 @@ class Booking extends Component {
         ))
       )
     }
+    // writing that if else statement and taking selector of that component
     else if (this.state.filter === 'editform') {
       return (
-        <Addbooking editdata={this.state.edit}></Addbooking>
+        <Editbooking editdata={this.state.edit}></Editbooking>
       )
     }
 
     return (
       <React.Fragment>
+
         <div className="container">
           <Row>
             <div className="Product">
@@ -174,7 +202,8 @@ class Booking extends Component {
                 <button type="button" onClick={() => this.activeHandler('inactive')}>inactive</button>
                 <button type="button" onClick={() => this.activeHandler('all')}>all</button>
                 <button className="fa fa-plus-circle" style={{ margin: "10px", float: "left" }} onClick={this.row}><Link to={{ 'pathname': '/Addbooking' }}>Add Booking</Link></button>
-                <input type="text" className="fa fa-search" style={{ margin: "10px", float: "left" }} onClick={this.row}></input>
+                <Search input type="text" InputHandler={(e) => this.HandleInput(e)} className="fa fa-search" style={{ margin: "10px", float: "left" }}></Search>
+                {/* <input type="text" className="fa fa-search" style={{ margin: "10px", float: "left" }} onClick={this.row}></input> */}
                 <div className="root">
                   {/* <CardContent> */}
 

@@ -1,137 +1,181 @@
 import React, { Component } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-
-// import Table from '@material-ui/core/Table';
-// import TableBody from '@material-ui/core/TableBody';
+import Table from 'react-bootstrap/Table';
+import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody'
-import Paper from '@material-ui/core/Paper';
-import Sidebar from '../Commons/Sidebar';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import './Booking.css';
+import './Parkingspace.css';
 import Axios from 'axios';
-import Table from 'react-bootstrap/Table';
+import Sidebar from '../Commons/Sidebar';
+import { CardContent } from '@material-ui/core';
+import Row from 'react-bootstrap/Row';
+
+import Addparking from './Addparking';
 
 
-// import Row from 'react-bootstrap/Row';
+class Praking extends Component {
+    constructor() {
+        super();
 
-class Booking extends Component {
-  constructor() {
-    super();
-  }
-  state = {
-    name: '',
-    aviliablenow: '',
-    price_today: '',
-    status: '',
-    Status: '',
-    data: []
-  };
-  componentDidMount() {
-    this.getall();
-  }
-  getall = () => {
-    Axios.get("http://localhost:8080/api/getSpace", { ...this.state })
-      .then((get) => {
-        console.log('get data', get.data);
+    }
+    state = {
+        parking_id: '',
+        name: '',
+        description: '',
+        aviliablenow: '',
+        price_today:'',
+        status:'',
+        addproperty: 'add',
+        edit: [],
+        data: [],
+        filter: ''
+    };
+
+    onAddHandler = () => {
+        Axios.post("http://localhost:8080/api/addspace", { ...this.state })
+            .then((res) => {
+                console.log('add data', res);
+            })
+    }
+
+    componentDidMount() {
+        this.onGetHandler();
+        // this.activeHandler();
+
+    }
+    onGetHandler = () => {
+        Axios.get("http://localhost:8080/api/getSpace", { ...this.state })
+            .then((res) => {
+                console.log('get data', res);
+                this.setState({
+                    data: res.data
+                })
+
+            })
+    }
+
+    onUpdateHandler = (data) => {
+
         this.setState({
-          data: get.data
+            edit: data,
+            addproperty: 'editform'
         })
-      })
-  }
+        // Axios.put("http://localhost:9090/api/updateproperty", { ...this.state })
+        //     .then((res) => {
+        //         console.log('[update]', res);
+        //     })
+    }
+
+    onDeleteHandler = (id) => {
+        Axios.delete("http://localhost:8080/api/deletespace/" + id)
+            .then((res) => {
+                console.log('delete', res);
+                this.onGetHandler();
+            })
+    }
+
+    
+    onAddspaceHandler = (data) => {
+        console.log('data', data)
+        this.setState({
+            addproperty: data,
+            edit: []
+        })
+    }
+
+
+    render() {
+        if (this.state.addproperty === 'add') {
+return(
+           
+<React.Fragment>
+<div className="container">
+            <Row>
+  <div className="Product">
+    <Sidebar></Sidebar>
+         </div>
+         <div className="cardss">
+             <div className="card9">
+           <div className="root">
+           <CardContent>
+            <button className="fa fa-plus-circle" style={{margin:"10px",float:"left"}} onClick={() => this. onAddspaceHandler('form')}>
+            Add Space</button>
+            {/* <div className="input-icons"/> 
+            <i className="fa fa-search icon" style={{float:"right"}}></i> 
+            <input type="text"  placeholder="Search" /> 
+  */}
+  {/* <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Select Category</button>
+   */}
   
-  render() {
 
-    return (
-      <React.Fragment>
-        <div className="container">
-          <Row>
-            <div className="Product">
-              <Sidebar></Sidebar>
-            </div>
-            <div className="card">
+    <Table striped bordered hover size="xl" >
+      <TableHead>
+        <TableRow>
+        <TableCell type="checkbox" align="left"></TableCell>
+          <TableCell align="left">Name</TableCell>
+          <TableCell align="left">Available now</TableCell>
+          
+          <TableCell align="left">Price today</TableCell>
+          <TableCell align="left">Status</TableCell>
+           <TableCell align="left">Actions</TableCell> 
+       </TableRow>
+      </TableHead>
+      <TableBody>
+        {
+            this.state.data.map((row, index) => (
+          <TableRow key={index}>
+          <input type="checkbox"></input>
+            <TableCell scope="row">
+              {row.name}
+            </TableCell>
+             <TableCell align="left">{row.availablenow}</TableCell>
+             <TableCell align="left">{row.price_today}</TableCell>
+            
+            <TableCell align="left">
+               <select>
+            <option value="Active">Active</option>
+            <option value="inactive">inactive</option>
+              </select>
+            </TableCell> 
+           <TableCell>
+            <button className="fa fa-edit" style={{margin:"10px"}} onClick={() => this.onUpdateHandler(row)}></button>
+            {/* <button className="fa fa-trash" style={{margin:"10px"}} onClick={()=>this.DeleteHandler(row.id)}></button> */}
+            <button className="fa fa-trash" style={{margin:"10px"}} 
+            onClick={() =>window.confirm("want to delete?") && this.onDeleteHandler(row.product_id)}></button>
+            </TableCell>
+            </TableRow>
+        ))}
+      </TableBody>
+      </Table>
+      </CardContent>
+      </div>
+      </div>
+      </div>
+        </Row>
+       </div>
 
-              <div className="card1">
+                </React.Fragment>
+            );
+        } 
+        else if (this.state.addproperty === 'form') {
+            console.log("data", this.state.edit)
+            return (
+               
+                <Addparking editdata={this.state.edit}></Addparking>
+               
+            );
+        }
+        else if (this.state.addproperty === 'editform') {
+            return (
 
-                <nav className="navbar navbar-expand-sm bg-light">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link">Parking space</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link">Price</a>
-                    </li>
-                  </ul>
-                </nav>
-                <div class="alert alert-info alert-dismissible">
-                  <button type="button" class="close" style={{ position: "absolute", top: "-4px", right: "-13px" }} data-dismiss="alert">&times;</button><strong>Parking space!</strong> Below you can see list of available parking space types. Add as many space types as you need.
-  </div>
-                <button className="fa fa-plus-circle" style={{ margin: "10px", float: "left" }} onClick={this.row}>Add Parking</button>
-                <input type="text" className="fa fa-search" style={{ margin: "10px", float: "left" }} onClick={this.row}></input>
-                <div className="root">
-                  {/* <CardContent> */}
+                <Addparking editdata={this.state.edit}> </Addparking>
+                )
 
-                  <Table className="root1" striped bordered hover size="md">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell type="checkbox" align="right"></TableCell>
-                        <TableCell align="right">Name</TableCell>
+            }
+        }
+        
+        
+        }
 
-                        <TableCell align="right">Occupied now</TableCell>
-                        <TableCell aligh="right">Avilable now</TableCell>
-
-                        <TableCell align="right">Price today</TableCell>
-
-                        <TableCell align="right">Status</TableCell>
-                        {/* <TableCell align="right">Status</TableCell> */}
-                        <TableCell align="right">Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {
-                        this.state.data.map((row, index) => (
-                          <TableRow key={index}>
-                            <input type="checkbox"></input>
-                            <TableCell component="th" scope="row">
-                              {row.name}
-                            </TableCell>
-                            <TableCell >{row.occupiednow}</TableCell>
-                            <TableCell align="right">{row.aviliablenow}</TableCell>
-                             
-
-                            <TableCell >{row. price_today}</TableCell>
-                            <TableCell >{row.status}</TableCell>
-                            <TableCell>{row.actions}
-                              <button className="fa fa-edit ic" onClick={row}></button>
-                              <button className="fa fa-trash ic" onClick={row}></button>
-                            </TableCell>
-
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                  {/* </CardContent> */}
-                  {/* </Card> */}
-                  {/* </Paper> */}
-                </div>
-              </div>
-
-            </div>
-            {/* </div> */}
-            {/* </Col> */}
-          </Row>
-          {/* </Container> */}
-        </div>
-      </React.Fragment>
-
-    );
-
-  }
-}
-
-export default Booking;
+export default Praking;

@@ -3,20 +3,17 @@
      margin: 50px 0 0 0;
      background-color: rgb(211,211,211); 
  } */
- .navbar{
-    margin:  -40px 17px 10px 10px;
- }
-  
-  .card1{
+ 
+  /* .card6{
      
      width: 630px;
      margin: 51px 10px 0 10px;
-     /* padding: 10px 10px 15px 50px; */
+     padding: 10px 10px 15px 50px;
      /* background-color: rgb(211,211,211);  */
- }
- /* .card{
+ /* } */ 
+ .card9{
     
-     margin: 50px -40px 40px 35px;
+     margin:54px -1px 13px -1px;;
      background-color:white;  
  }
  
@@ -34,17 +31,35 @@
    
      position: relative;
      /* background-color: turquoise; */
-     /* margin: 2px 25px -4px 10px;
-     padding: 9px 6px 6px 0px;
+     margin: 2px 25px -4px 10px;
     
  }
-     */
+    
  /* .root1{
      width: 550px;
      margin: 30px 10px 20px 0;
- }  */ 
+ }  */
  /* .card-table{
      width: 50px;
      margin: 51px 0 0 30px;   
  } */
   
+ .table{
+    minWidth: 650;
+  }
+  .root {
+    width:'100%';
+    overflowX:'auto';
+  }
+  .cardss{
+    
+    width: 630px;
+    margin: 51px 0 0 30px;
+    padding: 10px 10px 15px 20px;
+    } 
+
+    .selected{
+      margin: 1px -8px 13px 230px;
+      padding: 3px 41px 4px 24px;
+  }
+    
