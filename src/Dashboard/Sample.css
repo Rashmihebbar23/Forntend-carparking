@@ -1,0 +1,84 @@
+.card{
+margin: 52px 97px 7px 16px;
+padding: 10px 33px 61px 83px;
+padding: 12px 0px -15px 60px;
+width: 58%;
+}
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Create three equal columns that floats next to each other */
+  .column {
+    margin: -125px -23px 18px -55px;
+    float: left;
+    width: 80.33%;
+    padding: 10px;
+    background-color:gray;
+    height: 111px;
+    padding: 1;
+
+
+  }
+  .column2{
+    margin:-143px -201px 19px 255px;
+    float: left;
+    width: 80.33%;
+    padding: 10px;
+    /* background-color: palevioletred; */
+    height: 111px;
+    padding: 1;
+    background-color: rgb(240, 178, 178)
+
+  }
+  .column1{
+    background-color:
+rgb(192, 181, 181)}
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  /* .row{
+      background-color: lightseagreen;
+  } */
+/* NEW */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 50px 1fr 50px;
+    grid-template-areas:
+      "sidenav header"
+      "sidenav main"
+      "sidenav footer";
+    height: 100vh;
+  }
+  
+  /* Give every child element its grid name */
+  .header {
+    grid-area: header;
+    background-color:gray;
+    margin: -126px -20px 82px -310px;
+    padding: 7px 20px 110px 0px;
+  }
+  
+  .sidenav {
+    grid-area: sidenav;
+    background-color: gray;
+  }
+  
+  .main {
+    grid-area: main;
+    background-color:gray;
+    display: block;
+    margin: -14px -17px 56px -308px;
+  }
+  
+  /* .footer {
+    grid-area: footer;
+    background-color: #648ca6;
+  } */
+

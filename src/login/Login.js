@@ -38,7 +38,7 @@ class Login extends Component {
     axios.post("http://localhost:8080/login/generate-token",{...this.state})
       .then((res) => {
         console.log('post data', res);
-        localStorage.setItem("token", res.token)
+        // localStorage.setItem("token", res.token)
         // this.setState({
         // })
 

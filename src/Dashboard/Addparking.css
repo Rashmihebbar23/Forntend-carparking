@@ -1,11 +1,12 @@
 
  
-.card8{
+.card1{
     border-radius: 5px;
    
      background-color: gainsboro;
      /* width:100%; */
 margin:-341px 250px 72px 365px;
+padding: 55px 112px 17px 24px; 
 
 
 } 
@@ -23,8 +24,16 @@ margin: 45px 246px 40px 5px;
 
 }
 .block{
-  margin:7px -11px 9px -70px;
-  padding: 4px 62px 0px 58px;
-  border-radius: 2px;
+  margin: 10px -56px 6px -59px;
+    padding: 7px 65px 1px 59px;
+    border-radius: 5px;
 }
-
+label{
+  display: block;
+  width: 140px;
+  text-align:left;
+  float: left;
+  margin:0 10px 10px -10px;
+   font-style: oblique;
+   color: #B4886B;
+ } 

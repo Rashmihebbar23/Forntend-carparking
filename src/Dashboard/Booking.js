@@ -1,245 +1,206 @@
 import React, { Component } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Search from './Search';
-
-// import Table from '@material-ui/core/Table';
-// import TableBody from '@material-ui/core/TableBody';
+import Table from 'react-bootstrap/Table';
+import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody'
-import Paper from '@material-ui/core/Paper';
-import Sidebar from '../Commons/Sidebar';
-import Container from 'react-bootstrap/Container'
+import { CardContent } from '@material-ui/core';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import './Booking.css';
+import './Parkingspace.css';
+
 import Axios from 'axios';
-import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
-import Editbooking from './Editbooking';
-import { statement } from '@babel/template';
+import Addbooking from './Addbooking';
+
+import Sidebar from '../Commons/Sidebar';
 
 
-// import Row from 'react-bootstrap/Row';
 
 class Booking extends Component {
-  constructor() {
-    super();
-  }
-  state = {
-    booking_id: '',
-    valuefrom: '',
-    valueto: '',
-    space: '',
-    name: '',
-    Status: '',
-    data: [],
-    BookingData: [],
-    filter: '',
-    filterproduct: [],
-    getvalue: '',
-    editdata: []
+    constructor() {
+        super();
 
-  };
-  componentDidMount() {
-    this.getall();
-    // this.activeHandler();
-  }
-  getall = () => {
-    Axios.get("http://localhost:8080/api/getbook", { ...this.state })
-      .then((get) => {
-        console.log('get data', get.data);
-        this.setState({
-          bookingData: get.data,
-          filter: 'none'
-        })
-      })
-  }
-  onUpdateHandler = (put) => {
-    // Axios.put("http://localhost:8080/api/updatebook", {...this.state})
-    // .then((put)=>{
-    this.setState({
-      // array of data
-      edit: put,
-      filter: 'editform'
-    })
-    // })
-  }
-
-  onDeleteHandler = (id) => {
-    Axios.delete("http://localhost:8080/api/deleteBook/" + id)
-      .then((del) => {
-        console.log('delete', del);
-      })
-  }
-
-  activeHandler = (res) => {
-    switch (res) {
-      case 'active': {
-        this.setState({
-          filter: 'yes',
-          data: this.state.bookingData.filter((res) => res.status === 'active')
-        })
-        break;
-      }
-
-      case 'inactive': {
-        this.setState({
-          filter: 'yes',
-          data: this.state.bookingData.filter((res) => res.status === 'inactive')
-        })
-        break;
-      }
-      case 'all': {
-        this.setState({
-          filter: 'yes',
-          data: this.state.bookingData
-        })
-      }
     }
-  }
+    state = {
+      booking_id: '',
+      valuefrom: '',
+      valueto: '',
+      space: '',
+      name: '',
+      Status: '',
+      data: [],
+      BookingData: [],
+      filter: '',
+      filterproduct: [],
+      getvalue: '',
+      editdata: [],
+      dataFilter:[],
+      addproperty: 'add',
+    };
 
-  HandleInput = (e) => {
+    onAddHandler = () => {
+        Axios.post("http://localhost:8080/api/addBook", { ...this.state })
+            .then((res) => {
+                console.log('add data', res);
+            })
+    }
 
-    this.setState({ getvalue: e.target.value })
-    console.log("get the input datataatatat", this.state.getvalue);
-if(this.state.getvalue!==null)
-{
-    const updatedList = this.state.bookingData.filter(item => {
+    componentDidMount() {
+        this.onGetHandler();
+        // this.activeHandler();
 
-      console.log("entered dtatassssss", item.status)
+    }
+    onGetHandler = () => {
+        Axios.get("http://localhost:8080/api/getbook", { ...this.state })
+            .then((res) => {
+                console.log('get data', res);
+                this.setState({
+                      bookingData: res.data
+                },()=>this.activeHandler('All'))
+            })
+    }
 
-      if (item['status'] !== undefined) {
-        return (
-          item['status'].toLowerCase().includes(this.state.getvalue.toLowerCase())
-        );
-      }
+    onUpdateHandler = (data) => {
 
-    });
-    this.setState({ bookingData: updatedList });
+        this.setState({
+            edit: data,
+            addproperty: 'editform'
+        })
+        // Axios.put("http://localhost:9090/api/updateproperty", { ...this.state })
+        //     .then((res) => {
+        //         console.log('[update]', res);
+        //     })
+    }
 
-  }
-  }
+    onDeleteHandler = (id) => {
+        Axios.delete("http://localhost:8080/api/deleteBook/" + id)
+            .then((res) => {
+                console.log('delete', res);
+                this.onGetHandler();
+            })
+    }
 
-  render() {
-    let tableBody = null;
-    if (this.state.filter === 'none') {
-      tableBody = (
-        this.state.bookingData.map((row, index) => (
+    activeHandler = (res) => {
+      switch (res) {
+        case 'confirmed': {
+          this.setState({
+            filter: 'yes',
+            dataFilter: this.state.bookingData.filter((res) => res.status === 'confirmed')
+           
+          })
+          console.log('confirmed', res);
+          break;
+        }
+         
+        case 'canclled': {
+          this.setState({
+            filter: 'yes',
+            dataFilter: this.state.bookingData.filter((res) => res.status === 'canclled')
+          })
+          break;
+        }
+          case 'All': {
+            this.setState({
+              filter:'yes',
+              dataFilter:this.state.bookingData
+            })
+          }
+        }
+    }
+    onAddpropertyHandler = (data) => {
+        console.log('data', data)
+        this.setState({
+            addproperty: data,
+            edit: []
+        })
+    }
+
+
+    render() {
+        if (this.state.addproperty === 'add') {
+
+            return (
+                <React.Fragment>
+                   <div className="container">
+            <Row>
+  <div className="Product">
+    <Sidebar></Sidebar>
+         </div>
+         <div className="cardss">
+             <div className="card9">
+           <div className="root">
+           <CardContent>
+            <button className="fa fa-plus-circle" style={{margin:"10px",float:"left"}} onClick={() => this. onAddpropertyHandler('form')}>Addbooking</button>
+            {/* <div className="input-icons"/> 
+            <i className="fa fa-search icon" style={{float:"right"}}></i> 
+            <input type="text"  placeholder="Search" /> 
+  */}
+  {/* <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Select Category</button>
+   */}
+  
+
+    <Table striped bordered hover size="xl" >
+      <TableHead>
+        <TableRow>
+        <TableCell type="checkbox" align="left"></TableCell>
+          <TableCell align="left">valuefrom</TableCell>
+          <TableCell align="left">valueto</TableCell> 
+          <TableCell align="left">space</TableCell>
+          <TableCell align="left">name</TableCell>
+          <TableCell align="left">Status</TableCell>
+           <TableCell align="left">Actions</TableCell> 
+       </TableRow>
+      </TableHead>
+      <TableBody>
+        {
+            this.state.dataFilter.map((row, index) => (
           <TableRow key={index}>
-            <input type="checkbox"></input>
-            <TableCell component="th" scope="row">
+          <input type="checkbox"></input>
+            <TableCell scope="row">
               {row.valuefrom}
             </TableCell>
-            {/* <TableCell align="right">{row.paymentMethod}</TableCell> */}
-            <TableCell >{row.valueto}</TableCell>
-            <TableCell >{row.space}</TableCell>
-            <TableCell>{row.client.name}</TableCell>
-            <TableCell >{row.status}</TableCell>
-            <TableCell>{row.actions}
-
-              <button className="fa fa-edit ic" onClick={() => this.onUpdateHandler(row)}></button>
-              <button className="fa fa-trash ic" onClick={() => this.onDeleteHandler(row.booking_id)}></button>
+             <TableCell align="left">{row.valueto}</TableCell>
+             <TableCell align="left">{row.space}</TableCell>
+             <TableCell align="left">{row.client.name}</TableCell>
+             <TableCell align="left">{row.status}</TableCell> 
+           <TableCell>
+            <button className="fa fa-edit" style={{margin:"10px"}} onClick={() => this.onUpdateHandler(row)}></button>
+            {/* <button className="fa fa-trash" style={{margin:"10px"}} onClick={()=>this.DeleteHandler(row.id)}></button> */}
+            <button className="fa fa-trash" style={{margin:"10px"}} 
+            onClick={() =>window.confirm("want to delete?") && this.onDeleteHandler(row.booking_id)}></button>
             </TableCell>
+            </TableRow>
+        ))}
+      </TableBody>
+      </Table>
+      </CardContent>
+      </div>
+      </div>
+      </div>
+        </Row>
+       </div>
 
-          </TableRow>
-        ))
-      )
-    }
-    else if (this.state.filter === 'yes') {
-      tableBody = (
-        this.state.data.map((row, index) => (
-          <TableRow key={index}>
-            <input type="checkbox"></input>
-            <TableCell component="th" scope="row">
-              {row.valuefrom}
-            </TableCell>
-            {/* <TableCell align="right">{row.paymentMethod}</TableCell> */}
-            <TableCell >{row.valueto}</TableCell>
-            <TableCell >{row.space}</TableCell>
-            <TableCell>{row.client.name}</TableCell>
-            <TableCell >{row.status}</TableCell>
-            <TableCell>{row.actions}
+                </React.Fragment>
+            );
+            
+        } 
+        else if (this.state.addproperty === 'form') {
+          console.log("data", this.state.edit)
+          return (
+             
+              <Addbooking editdata={this.state.edit}></Addbooking>
+             
+          );
+      }
+      else if (this.state.addproperty === 'editform') {
+          return (
 
-            </TableCell>
+              <Addbooking editdata={this.state.edit}> </Addbooking>
+          );
 
-          </TableRow>
-        ))
-      )
-    }
-    // writing that if else statement and taking selector of that component
-    else if (this.state.filter === 'editform') {
-      return (
-        <Editbooking editdata={this.state.edit}></Editbooking>
-      )
-    }
-
-    return (
-      <React.Fragment>
-
-        <div className="container">
-          <Row>
-            <div className="Product">
-              <Sidebar></Sidebar>
-            </div>
-            <div className="card">
-
-              <div className="card1">
-
-                <nav className="navbar navbar-expand-sm bg-light">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Booking</a>
-                    </li>
-                  </ul>
-                </nav>
-                <div class="alert alert-info alert-dismissible">
-                  <button type="button" class="close" style={{ position: "absolute", top: "-4px", right: "-13px" }} data-dismiss="alert">&times;</button><strong>Booking!</strong> Below you can find a list with all bookings made. You can sort, filter, delete and edit them..
-  </div>
-                <button type="button" onClick={() => this.activeHandler('active')}>active</button>
-                <button type="button" onClick={() => this.activeHandler('inactive')}>inactive</button>
-                <button type="button" onClick={() => this.activeHandler('all')}>all</button>
-                <button className="fa fa-plus-circle" style={{ margin: "10px", float: "left" }} onClick={this.row}><Link to={{ 'pathname': '/Addbooking' }}>Add Booking</Link></button>
-                <Search input type="text" InputHandler={(e) => this.HandleInput(e)} className="fa fa-search" style={{ margin: "10px", float: "left" }}></Search>
-                {/* <input type="text" className="fa fa-search" style={{ margin: "10px", float: "left" }} onClick={this.row}></input> */}
-                <div className="root">
-                  {/* <CardContent> */}
-
-                  <Table className="root1" striped bordered hover size="md">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell type="checkbox" align="right"></TableCell>
-                        <TableCell align="right">valuefrom</TableCell>
-                        <TableCell align="right">valueto</TableCell>
-                        <TableCell align="right">space</TableCell>
-                        <TableCell align="right">name</TableCell>
-                        <TableCell align="right">Status</TableCell>
-                        <TableCell align="right">Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {tableBody}
-                    </TableBody>
-                  </Table>
-                  {/* </CardContent> */}
-                  {/* </Card> */}
-                  {/* </Paper> */}
-                </div>
-              </div>
-
-            </div>
-            {/* </div> */}
-            {/* </Col> */}
-          </Row>
-          {/* </Container> */}
-        </div>
-      </React.Fragment>
-
-    );
-
+      }
   }
+       
 }
 
 export default Booking;

@@ -59,7 +59,7 @@ class AddProperty extends Component {
                             <Sidebar></Sidebar>
                         </div>
 
-                        <div className="card8">
+                        <div className="card1">
                             <div className="card-body">
                             {/* <div className="block"> */}
                             <label>Property Name:</label>

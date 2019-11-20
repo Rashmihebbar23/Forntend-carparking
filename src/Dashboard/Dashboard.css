@@ -1,39 +1,37 @@
  
-.card2{
-   
-    margin:54px -1px 13px -1px;;
-    background-color:rgb(236, 228, 228);  
-}
+
 .column {
     float: left;
     width: 25%;
     padding: 0 10px;
   }
-  /* .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  } */
-  /* .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    /* padding: 16px 16px 16px 16px; */
-    /* margin:12px -96px 11px 15px;
-    text-align: center;
-    background-color: #f1f1f1;
-   */
-  /* } */ */
-  .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    /* padding: 16px 16px 16px 16px; */
-    margin: 12px -96px 11px 18px;
-    text-align: center;
-    background-color: #f1f1f1;
-    /* margin: 10px; */
-}
   
+  /* .card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    margin: -346px 19px 8px 378px;
+    padding: 42px 27px 16px 17px;
+}
+   */
   
     .dashboard_row {
         border-bottom: solid 1px #ccc;
         padding: 14px 10px 8px 10px;
         overflow: scroll;
+  }
+
+  .col-sm-3{
+    border: 3px solid;
+  }
+  .row{
+    margin: 10px -147px 10px 1px;
   }

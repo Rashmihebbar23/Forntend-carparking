@@ -13,7 +13,7 @@ import Clients from '../Dashboard/Clients';
 import Editbooking from '../Dashboard/Editbooking';
 import Addparking from '../Dashboard/Addparking';
 import Dashboard from '../Dashboard/Dashboard';
-
+import Sample from '../Dashboard/Sample';
 import Search from '../Dashboard/Search';
 import Reports from '../Dashboard/Reports';
 
@@ -36,6 +36,7 @@ function Routing() {
      {/* <Route path="/edit/:id" component={Editparking}></Route>  */}
      <Route path="/Dashboard" component={Dashboard}></Route> 
      <Route path="/Reports" component={Reports} ></Route>
+     <Route path="/Sample" component={Sample} ></Route>
     
     </div>
   );

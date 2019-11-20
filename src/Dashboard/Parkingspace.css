@@ -13,7 +13,7 @@
  /* } */ 
  .card9{
     
-     margin:54px -1px 13px -1px;;
+     margin: -39px -1px 13px -1px;;
      background-color:white;  
  }
  
@@ -23,7 +23,7 @@
      background-color: white;
  }
  Table{
-     min-width: 650;
+     min-width: 100;
  
  }
  .alert-info{
@@ -45,7 +45,7 @@
  } */
   
  .table{
-    minWidth: 650;
+    width: 131%;
   }
   .root {
     width:'100%';
@@ -53,10 +53,11 @@
   }
   .cardss{
     
-    width: 630px;
-    margin: 51px 0 0 30px;
-    padding: 10px 10px 15px 20px;
-    } 
+    width: 640px;
+    margin: 49px -37px 34px -40px;
+    padding: 15px 14px 19px 27px;
+}
+    
 
     .selected{
       margin: 1px -8px 13px 230px;
